@@ -1,0 +1,69 @@
+body {
+    background-color: #0d0d0d;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#sectors-container {
+    flex-grow: 1;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#sectors-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+
+.sector {
+    border: 1px solid #00ff00;
+    padding: 20px;
+    margin: 10px;
+    min-height: 200px;
+}
+
+h2 {
+    color: #ff00ff;
+    text-shadow: 0 0 5px #ff00ff;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px 0;
+}
+
+#merger-proposals-container {
+    border-top: 2px solid #00ff00;
+    padding: 20px;
+}
+
+#mergers {
+    display: flex;
+    justify-content: space-around;
+}
+
+.merger {
+    border: 1px solid #00ffff;
+    padding: 15px;
+    width: 30%;
+    cursor: pointer;
+}
+
+.merger:hover {
+    background-color: #00ffff;
+    color: #0d0d0d;
+}
