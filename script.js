@@ -2,34 +2,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectorsContainer = document.getElementById('sectors-container');
     let isScrolling;
 
-    // Clone sectors to create the infinite loop effect
+    // --- Infinite Scroll Logic ---
     const sectors = Array.from(sectorsContainer.children);
     sectors.forEach(sector => {
         const clone = sector.cloneNode(true);
         sectorsContainer.appendChild(clone);
     });
 
-    function loopScroll() {
-        const scrollHeight = sectorsContainer.scrollHeight / 2;
-        const scrollTop = sectorsContainer.scrollTop;
+    let autoScrollAmount = 1; // Speed of the auto-scroll
+    let scrollInterval;
 
-        if (scrollTop >= scrollHeight) {
-            sectorsContainer.scrollTop = 1;
-        }
-        if (scrollTop <= 0) {
-            sectorsContainer.scrollTop = scrollHeight -1;
-        }
+    function startAutoScroll() {
+        scrollInterval = setInterval(() => {
+            sectorsContainer.scrollTop += autoScrollAmount;
+        }, 30); // Adjust interval for smoother or faster scroll
+    }
+
+    function stopAutoScroll() {
+        clearInterval(scrollInterval);
     }
 
     sectorsContainer.addEventListener('scroll', () => {
-        window.clearTimeout(isScrolling);
-        isScrolling = setTimeout(() => {
-            loopScroll();
-        }, 66);
+        const { scrollTop, scrollHeight, clientHeight } = sectorsContainer;
+        const scrollHeightHalf = scrollHeight / 2;
+
+        if (scrollTop >= scrollHeightHalf) {
+            sectorsContainer.scrollTop = scrollTop - scrollHeightHalf;
+        } else if (scrollTop <= 0) {
+            sectorsContainer.scrollTop = scrollTop + scrollHeightHalf;
+        }
     });
 
-    // Initial positioning
+    sectorsContainer.addEventListener('mouseenter', stopAutoScroll);
+    sectorsContainer.addEventListener('mouseleave', startAutoScroll);
+
+    // Initial positioning and start scroll
     sectorsContainer.scrollTop = 1;
+    startAutoScroll();
 
     // --- Game State & Logic ---
     let turn = 1;
